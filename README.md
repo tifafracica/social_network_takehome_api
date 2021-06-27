@@ -1,12 +1,12 @@
-#TAKEHOME SOCIAL MEDIA API
+# TAKEHOME SOCIAL MEDIA API
 
 A client needs to know what is happening on the social networks. All of them. Right now.
 
 The three social networks the client is interested in are:
 
-● https://takehome.io/twitter
-● https://takehome.io/facebook
-● https://takehome.io/instagram
+https://takehome.io/twitter
+https://takehome.io/facebook
+https://takehome.io/instagram
 
 Because these social networks are so webscale, they don't always respond predictably. The delay in their response almost appears like someone waited for a random integer of seconds before responding!
 
