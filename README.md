@@ -1,24 +1,24 @@
-# README
+#TAKEHOME SOCIAL MEDIA API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A client needs to know what is happening on the social networks. All of them. Right now.
 
-Things you may want to cover:
+The three social networks the client is interested in are:
 
-* Ruby version
+● https://takehome.io/twitter
+● https://takehome.io/facebook
+● https://takehome.io/instagram
 
-* System dependencies
+Because these social networks are so webscale, they don't always respond predictably. The delay in their response almost appears like someone waited for a random integer of seconds before responding!
 
-* Configuration
+Also, sometimes they will respond with an error. This error will not be valid JSON. Life's hard sometimes 😧.
 
-* Database creation
+The client needs to be able to run your thing, then issue the command:
+`curl localhost:3000`
 
-* Database initialization
+And get back a JSON response of the output from the three social networks in the format:
 
-* How to run the test suite
+`{ twitter: [tweets], facebook: [statuses], instagram: [photos] }`
 
-* Services (job queues, cache servers, search engines, etc.)
+Order isn't important.
 
-* Deployment instructions
-
-* ...
+⌨️ with ❤️ by [tifafracica](https://github.com/tifafracica) 😊
