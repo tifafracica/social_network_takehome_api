@@ -3,14 +3,13 @@ class Socialnetwork < ApplicationRecord
 
   def api_call
     url_list = [ENV['TWITTER_URL'], ENV['FACEBOOK_URL'], ENV['INSTAGRAM_URL']]
-    response = data_fetch(url_list)
+    response = do_requests(url_list)
     response
   end
 
-
   private
 
-  def data_fetch(array)
+  def do_requests(array)
     api_info_to_consume = Hash.new
     @social_media_name = ''
     @key = ''
@@ -51,10 +50,6 @@ class Socialnetwork < ApplicationRecord
       @key = 'photo'
     else @social_media_name = 'is not a valid social media'
     end
-
-
   end
-
-
 
 end

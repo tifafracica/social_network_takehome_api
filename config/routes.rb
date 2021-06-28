@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root :to => "api/v1/socialnetworks#make_api_response"
   namespace :api do
     namespace :v1 do
       resources :socialnetworks
