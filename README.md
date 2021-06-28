@@ -14,13 +14,15 @@ Because these social networks are so webscale, they don't always respond predict
 
 Also, sometimes they will respond with an error. This error will not be valid JSON. Life's hard sometimes 😧.
 
-The client needs to be able to run your thing, then issue the command:
+Please, open the terminal and start the api with `rails s`
+
+Then open another tab in the terminal, you needs to be able to run the next the command:
 `curl localhost:3000`
+
 
 And get back a JSON response of the output from the three social networks in the format:
 
 `{ twitter: [tweets], facebook: [statuses], instagram: [photos] }`
 
-Order isn't important.
 
 ⌨️ with ❤️ by [tifafracica](https://github.com/tifafracica) 😊
