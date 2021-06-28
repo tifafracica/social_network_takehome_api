@@ -1,49 +1,60 @@
 class Socialnetwork < ApplicationRecord
   require 'rest-client'
 
-  def get_data_twitter
-    response = data_fetch(ENV['TWITTER_URL'], 'twitter')
-    find_the_hash_property(response, 'tweet')
-  end
-
-  def get_data_facebook
-    response = data_fetch(ENV['FACEBOOK_URL'], 'facebook')
-    find_the_hash_property(response, 'status')
-  end
-
-  def get_data_instagram
-    response = data_fetch(ENV['INSTAGRAM_URL'], 'instagram')
-    find_the_hash_property(response, 'photo')
-  end
-
   def api_call
+    url_list = [ENV['TWITTER_URL'], ENV['FACEBOOK_URL'], ENV['INSTAGRAM_URL']]
+    response = data_fetch(url_list)
+    response
+  end
+
+
+  private
+
+  def data_fetch(array)
     api_info_to_consume = Hash.new
-    api_info_to_consume["twitter"] = get_data_twitter
-    api_info_to_consume["facebook"] = get_data_facebook
-    api_info_to_consume["instagram"] = get_data_instagram
+    @social_media_name = ''
+    @key = ''
+
+    array.each do |url|
+      get_sm_name_and_key(url)
+      begin
+        response = RestClient::Request.execute(method: :get, url: url, timeout: 10000, open_timeout: 10000)
+      rescue RestClient::NotFound => err
+        puts "With have the this error #{err.response} in the #{@social_media_name} API call"
+        api_info_to_consume[@social_media_name] = "Sorry, we can't found this data"
+        next
+      rescue RestClient::InternalServerError
+        api_info_to_consume[@social_media_name] = "the data is not available, please try again later"
+        next
+      else
+        puts "The #{@social_media_name} API call worked!"
+        data_json = JSON.parse(response)
+        data_json.map!{|item| item[@key]}
+        api_info_to_consume[@social_media_name] = data_json
+      end
+    end
     puts api_info_to_consume
     api_info_to_consume
   end
 
-  private
 
-  def data_fetch(url, social_media_name)
-    begin
-      response = RestClient::Request.execute(method: :get, url: url, timeout: 5000, open_timeout: 5000)
-    rescue RestClient::NotFound => err
-      puts "With have the this error #{err.response} in the #{social_media_name} API call"
-      return 404
-    else
-      puts "The #{social_media_name} API call worked!"
-      return JSON.parse(response)
+  def get_sm_name_and_key(url)
+    case
+    when url.include?('twitter')
+      @social_media_name = 'twitter'
+      @key = 'tweet'
+    when url.include?('facebook')
+      @social_media_name = 'facebook'
+      @key = 'status'
+    when url.include?('instagram')
+      @social_media_name = 'instagram'
+      @key = 'photo'
+    else @social_media_name = 'is not a valid social media'
     end
+
+
   end
 
-  def find_the_hash_property(data, property_name)
-    if data == 404
-      "The data is not available"
-    else
-      data = data.map{|x| x[property_name]}
-    end
-  end
+
+
 end
